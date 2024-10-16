@@ -19,3 +19,7 @@ const recipeSchema = new mongoose.Schema({
     required: true,
   },
 });
+
+const Recipe = mongoose.model('Recipe', recipeSchema);
+
+export default Recipe;
