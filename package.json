@@ -1,0 +1,25 @@
+{
+  "name": "mp-meal-planner",
+  "version": "1.0.0",
+  "description": "MP: Meal Planner is a full-stack web application designed to help users plan their weekly meals and reduce food waste. By using this app, users can buy only what is needed for specific meals, keeping grocery expenses in check and avoiding unnecessary purchases.",
+  "type": "module",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node backend/server.js",
+    "server": "nodemon backend/server.js",
+    "client": "npm start --prefix frontend",
+    "dev": "concurrently \"npm run server\" \"npm run client\""
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.21.1"
+  },
+  "devDependencies": {
+    "concurrently": "^9.0.1",
+    "dotenv": "^16.4.5",
+    "nodemon": "^3.1.7"
+  }
+}
