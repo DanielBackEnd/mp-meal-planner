@@ -5,7 +5,14 @@ import Product from '../models/productModel.js';
 // GET /api/products
 // private
 const getAllProducts = asyncHandler(async (req, res) => {
-  res.send('get all products');
+  const products = await Product.find();
+
+  if (products) {
+    res.status(200).json(products);
+  } else {
+    res.status(500);
+    throw new Error('Products not found');
+  }
 });
 
 // get product details
