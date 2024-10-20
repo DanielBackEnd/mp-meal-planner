@@ -23,14 +23,14 @@ const logoutUser = asyncHandler(async (req, res) => {
 });
 
 // get user profile
-// GET /api/users/:id
+// GET /api/users/profile
 // private
 const getUserProfile = asyncHandler(async (req, res) => {
   res.send('get user data');
 });
 
 // get user profile
-// PUT /api/users/:id
+// PUT /api/users/profile
 // private
 const updateUserProfile = asyncHandler(async (req, res) => {
   res.send('update user prpfo;e');
