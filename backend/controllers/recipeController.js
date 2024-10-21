@@ -35,3 +35,11 @@ const updateRecipe = asyncHandler(async (req, res) => {
 const deleteRecipe = asyncHandler(async (req, res) => {
   res.send('delete recipe');
 });
+
+export {
+  getAllRecipies,
+  getRecipeDetails,
+  createRecipe,
+  updateRecipe,
+  deleteRecipe,
+};

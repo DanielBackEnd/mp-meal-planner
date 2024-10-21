@@ -7,6 +7,7 @@ import { notFound, errorHandler } from './middleware/errorMiddleware.js';
 import userRouter from './routes/userRoutes.js';
 import productRouter from './routes/productRoutes.js';
 import fridgeRouter from './routes/fridgeRoutes.js';
+import recipeRouter from './routes/recipeRoutes.js';
 const PORT = process.env.PORT;
 
 connectDB();
@@ -25,6 +26,7 @@ app.get('/', (req, res) => {
 app.use('/api/users', userRouter);
 app.use('/api/products', productRouter);
 app.use('/api/fridge', fridgeRouter);
+app.use('/api/recipies', recipeRouter);
 
 app.use(notFound);
 app.use(errorHandler);
