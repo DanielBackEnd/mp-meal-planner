@@ -19,7 +19,28 @@ const getRecipeDetails = asyncHandler(async (req, res) => {
 // POST /api/recipies
 // private
 const createRecipe = asyncHandler(async (req, res) => {
-  res.send('create recipe');
+  const userId = req.user._id;
+  const { name } = req.body;
+
+  const recipe = await Recipe.create({
+    user: userId,
+    name,
+    indegrients: [],
+    price: 0,
+  });
+
+  if (recipe) {
+    res.status(201).json({
+      _id: recipe._id,
+      user: recipe.user,
+      name: recipe.name,
+      indegrients: recipe.indegrients,
+      price: recipe.price,
+    });
+  } else {
+    res.status(400);
+    throw new Error('Something went wrong');
+  }
 });
 
 // update recipe

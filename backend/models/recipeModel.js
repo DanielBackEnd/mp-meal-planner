@@ -13,10 +13,12 @@ const recipeSchema = new mongoose.Schema({
   indegrients: {
     type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Product' }],
     required: true,
+    default: [],
   },
   price: {
     type: Number,
     required: true,
+    default: 0,
   },
 });
 
