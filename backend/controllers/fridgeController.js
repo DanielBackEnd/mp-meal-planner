@@ -5,7 +5,28 @@ import Fridge from '../models/fridgeModel.js';
 // POST /api/fridge
 // private
 const createFridge = asyncHandler(async (req, res) => {
-  res.send('create fridge');
+  const fridgeExists = await Fridge.findOne({ user: req.user._id });
+
+  if (fridgeExists) {
+    res.status(400);
+    throw new Error('Fridge already exists for this user');
+  }
+
+  const fridge = await Fridge.create({
+    user: req.user._id,
+    products: [],
+  });
+
+  if (fridge) {
+    res.status(201).json({
+      _id: fridge._id,
+      user: fridge.user,
+      products: fridge.products,
+    });
+  } else {
+    res.status(400);
+    throw new Error('Something wrong, can not create fridge for this user');
+  }
 });
 
 // get user fridge
