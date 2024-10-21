@@ -48,10 +48,30 @@ const getUserFridge = asyncHandler(async (req, res) => {
 });
 
 // add product to fridge
-// POST /api/fridge/add
+// POST /api/fridge/add/
 // private
 const addProductToFridge = asyncHandler(async (req, res) => {
-  res.send('add product ro fridge');
+  const { productId } = req.body;
+
+  let fridge = await Fridge.findOne({ user: req.user._id });
+
+  if (!fridge) {
+    fridge = Fridge.create({
+      user: req.user._id,
+      products: [],
+    });
+  }
+
+  if (!fridge.products.includes(productId)) {
+    fridge.products.push(productId);
+    await fridge.save();
+    res.status(200).json({
+      message: 'Product has been add to fridge',
+    });
+  } else {
+    res.status(400);
+    throw new Error('Product already is in fridge');
+  }
 });
 
 // delete product from fridge
