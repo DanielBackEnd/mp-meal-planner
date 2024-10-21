@@ -26,7 +26,25 @@ const getProductDetails = asyncHandler(async (req, res) => {
 // POST /api/products
 // private
 const addNewProduct = asyncHandler(async (req, res) => {
-  res.send('add new product');
+  const { name, weight, mark } = req.body;
+
+  const product = await Product.create({
+    name,
+    weight,
+    mark,
+  });
+
+  if (product) {
+    res.status(201).json({
+      _id: product._id,
+      name: product.name,
+      weight: product.weight,
+      mark: product.mark,
+    });
+  } else {
+    res.status(400);
+    throw new Error('Invalid product data');
+  }
 });
 
 // update product
