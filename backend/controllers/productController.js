@@ -19,7 +19,21 @@ const getAllProducts = asyncHandler(async (req, res) => {
 // GET /api/products/:id
 // private
 const getProductDetails = asyncHandler(async (req, res) => {
-  res.send('get product details');
+  const productId = req.params.id;
+
+  const product = await Product.findById(productId);
+
+  if (product) {
+    res.status(200).json({
+      _id: product._id,
+      name: product.name,
+      weight: product.weight,
+      mark: product.mark,
+    });
+  } else {
+    res.status(500);
+    throw new Error('Invalid id product');
+  }
 });
 
 // add new product
