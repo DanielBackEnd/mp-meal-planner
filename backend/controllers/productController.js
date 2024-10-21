@@ -65,7 +65,25 @@ const addNewProduct = asyncHandler(async (req, res) => {
 // PUT /api/products/:id
 // private
 const updateProduct = asyncHandler(async (req, res) => {
-  res.send('update prodcut');
+  const product = await Product.findById(req.params.id);
+
+  if (product) {
+    product.name = req.body.name || product.name;
+    product.weight = req.body.weight || product.weight;
+    product.mark = req.body.mark || product.mark;
+
+    const updatedProduct = await product.save();
+
+    res.status(200).json({
+      _id: updatedProduct._id,
+      name: updatedProduct.name,
+      weight: updatedProduct.weight,
+      mark: updatedProduct.mark,
+    });
+  } else {
+    res.status(404);
+    throw new Error('Product not found');
+  }
 });
 
 export { getAllProducts, getProductDetails, addNewProduct, updateProduct };
