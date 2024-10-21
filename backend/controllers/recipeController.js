@@ -5,7 +5,14 @@ import Recipe from '../models/recipeModel.js';
 // GET /api/recipies
 // private
 const getAllRecipies = asyncHandler(async (req, res) => {
-  res.send('get all recipies');
+  const userId = req.user._id;
+  const recipies = await Recipe.find({ user: userId });
+
+  if (recipies) {
+    res.status(200).json(recipies);
+  } else {
+    res.status(404).json({ message: 'Recipies not found' });
+  }
 });
 
 // get recipe details
