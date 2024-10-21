@@ -78,7 +78,22 @@ const addProductToFridge = asyncHandler(async (req, res) => {
 // DELETE /api/fridge/delete
 // private
 const deleteProductFromFridge = asyncHandler(async (req, res) => {
-  res.send('remove product from fridge');
+  const { productId } = req.body;
+
+  const fridge = await Fridge.findOne({ user: req.user._id });
+
+  if (fridge) {
+    fridge.products = fridge.products.filter(
+      id => id.toString() !== productId.toString()
+    );
+    await fridge.save();
+    res.status(200).json({
+      message: 'Product has been removed',
+    });
+  } else {
+    res.status(404);
+    throw new Error('Fridge not found');
+  }
 });
 
 export {
