@@ -19,7 +19,21 @@ const getAllRecipies = asyncHandler(async (req, res) => {
 // GET /api/recipies/:id
 // private
 const getRecipeDetails = asyncHandler(async (req, res) => {
-  res.send('get recipe detail');
+  const recipeId = req.params.id;
+
+  const recipe = await Recipe.findById(recipeId);
+
+  if (recipe) {
+    res.status(200).json({
+      _id: recipe._id,
+      name: recipe.name,
+      indegrients: recipe.indegrients,
+      price: recipe.price,
+    });
+  } else {
+    res.status(404);
+    throw new Error('Recipe not found');
+  }
 });
 
 // create recipe
