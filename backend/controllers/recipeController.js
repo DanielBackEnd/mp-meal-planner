@@ -68,7 +68,28 @@ const createRecipe = asyncHandler(async (req, res) => {
 // PUT /api/recipies/:id
 // private
 const updateRecipe = asyncHandler(async (req, res) => {
-  res.send('update recipe');
+  const recipeId = req.params.id;
+
+  const recipe = await Recipe.findById(recipeId);
+
+  if (recipe) {
+    recipe.name = req.body.name || recipe.name;
+    recipe.indegrients = req.body.indegrients || recipe.indegrients;
+    recipe.price = req.body.price || recipe.price;
+
+    const updatedRecipe = await recipe.save();
+
+    res.status(200).json({
+      _id: updatedRecipe._id,
+      user: updatedRecipe.user,
+      name: updatedRecipe.name,
+      indegrients: updatedRecipe.indegrients,
+      price: updatedRecipe.price,
+    });
+  } else {
+    res.status(404);
+    throw new Error('Recipe not found');
+  }
 });
 
 // delete recipe
