@@ -96,7 +96,17 @@ const updateRecipe = asyncHandler(async (req, res) => {
 // DELETE /api/recipies/:id
 // private
 const deleteRecipe = asyncHandler(async (req, res) => {
-  res.send('delete recipe');
+  const recipeId = req.params.id;
+
+  const recipe = await Recipe.findById(recipeId);
+
+  if (recipe) {
+    await recipe.remove();
+    res.status(200).json({ message: 'Recipe has been deleted' });
+  } else {
+    res.status(404);
+    throw new Error('Recipe not found');
+  }
 });
 
 export {
