@@ -3,7 +3,7 @@ import User from '../models/userModel.js';
 import genToken from '../utils/genToken.js';
 
 // login & get token
-// GET /api/users/login
+// POST /api/users/login
 // public
 const loginUser = asyncHandler(async (req, res) => {
   const { email, password } = req.body;

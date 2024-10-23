@@ -9,7 +9,7 @@ import {
 } from '../controllers/userController.js';
 import protect from '../middleware/authMiddleware.js';
 
-router.get('/login', loginUser);
+router.post('/login', loginUser);
 router.post('/register', registerUser);
 router.post('/logout', logoutUser);
 router

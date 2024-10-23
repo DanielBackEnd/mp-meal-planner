@@ -1,10 +1,38 @@
 import { Container, Box, Typography, TextField, Button } from '@mui/material';
-import { Link } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import CircularProgress from '@mui/material/CircularProgress';
+import { useLoginMutation } from '../slices/usersApiSlice';
+import { setCredentials } from '../slices/authSlice';
+import { toast } from 'react-toastify';
 
 const LoginScreen = () => {
-  const submitHandler = e => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const [login, { isLoading }] = useLoginMutation();
+
+  const { userInfoMP } = useSelector(state => state.auth);
+
+  useEffect(() => {
+    if (userInfoMP) {
+      navigate('/home');
+    }
+  }, [userInfoMP, navigate]);
+
+  const submitHandler = async e => {
     e.preventDefault();
-    console.log('submitted');
+    try {
+      const res = await login({ email, password }).unwrap();
+      dispatch(setCredentials({ ...res }));
+      navigate('/home');
+    } catch (err) {
+      toast.error(err?.data?.message || err.error);
+    }
   };
 
   return (
@@ -37,6 +65,8 @@ const LoginScreen = () => {
             label='Email address'
             name='email'
             autoFocus
+            value={email}
+            onChange={e => setEmail(e.target.value)}
           />
           <TextField
             margin='normal'
@@ -46,15 +76,19 @@ const LoginScreen = () => {
             label='Password'
             type='password'
             id='password'
+            value={password}
+            onChange={e => setPassword(e.target.value)}
           />
           <Button
             type='submit'
             fullWidth
             variant='contained'
             sx={{ mt: 3, mb: 2 }}
+            disabled={isLoading}
           >
             Sign in
           </Button>
+          {isLoading && <CircularProgress />}
           <Box sx={{ display: 'flex', justifyContent: 'center' }}>
             <Typography variant='body1'>
               Don't have an account?{' '}
