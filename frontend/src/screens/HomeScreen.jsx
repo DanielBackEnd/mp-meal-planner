@@ -1,4 +1,12 @@
+import { Typography } from '@mui/material';
+import TopBar from '../components/TopBar';
+
 const HomeScreen = () => {
-  return <div>HomeScreen</div>;
+  return (
+    <>
+      <TopBar />
+      <Typography> home screen</Typography>
+    </>
+  );
 };
 export default HomeScreen;
