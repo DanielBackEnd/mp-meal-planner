@@ -9,6 +9,7 @@ import {
 import { Provider } from 'react-redux';
 import store from './store.js';
 import './index.css';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 import App from './App';
 import LoginScreen from './screens/LoginScreen.jsx';
 import RegisterScreen from './screens/RegisterScreen.jsx';
@@ -22,11 +23,22 @@ const router = createBrowserRouter(
   )
 );
 
+const theme = createTheme({
+  typography: {
+    fontFamily: 'Inter, sans-serif',
+    h3: {
+      fontFamily: 'Pacifico, cursive',
+    },
+  },
+});
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <Provider store={store}>
-      <RouterProvider router={router} />
+      <ThemeProvider theme={theme}>
+        <RouterProvider router={router} />
+      </ThemeProvider>
     </Provider>
   </React.StrictMode>
 );
