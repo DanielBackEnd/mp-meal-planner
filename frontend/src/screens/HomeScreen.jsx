@@ -1,11 +1,14 @@
-import { Typography } from '@mui/material';
+import { Stack } from '@mui/material';
 import TopBar from '../components/TopBar';
+import SideBar from '../components/SideBar';
 
 const HomeScreen = () => {
   return (
     <>
       <TopBar />
-      <Typography> home screen</Typography>
+      <Stack direction='row' spacing={2}>
+        <SideBar />
+      </Stack>
     </>
   );
 };
