@@ -6,6 +6,7 @@ import {
   ListItemText,
   Box,
 } from '@mui/material';
+import { makeStyles } from '@mui/styles';
 import {
   Settings,
   Home,
@@ -15,58 +16,84 @@ import {
 } from '@mui/icons-material';
 import { Link } from 'react-router-dom';
 
+const useStyles = makeStyles(theme => ({
+  box: {
+    [theme.breakpoints.down('sm')]: {
+      backgroundColor: '#2E79D5',
+      maxWidth: '50px',
+    },
+  },
+  item: {
+    [theme.breakpoints.down('sm')]: {
+      marginBottom: '25px',
+    },
+  },
+  text: {
+    [theme.breakpoints.down('sm')]: {
+      display: 'none',
+    },
+  },
+  icon: {
+    [theme.breakpoints.down('sm')]: {
+      color: '#fff',
+    },
+  },
+}));
+
 const SideBar = () => {
+  const classes = useStyles();
   return (
     <>
       <Box
-        height='calc(100vh - 96px)'
+        height='calc(100vh - 88px)'
         flex={1}
         p={2}
         display='flex'
         flexDirection='column'
         justifyContent='space-between'
+        className={classes.box}
       >
         <List>
-          <ListItem disablePadding>
+          <ListItem disablePadding className={classes.item}>
             <ListItemButton component={Link} to='/home'>
               <ListItemIcon>
-                <Home />
+                <Home className={classes.icon} />
               </ListItemIcon>
-              <ListItemText primary='Homepage' />
+              <ListItemText primary='Homepage' className={classes.text} />
             </ListItemButton>
           </ListItem>
-          <ListItem disablePadding>
+          <ListItem disablePadding className={classes.item}>
             <ListItemButton component={Link} to='/products'>
               <ListItemIcon>
-                <Fastfood />
+                <Fastfood className={classes.icon} />
               </ListItemIcon>
-              <ListItemText primary='Products' />
+              <ListItemText primary='Products' className={classes.text} />
             </ListItemButton>
           </ListItem>
-          <ListItem disablePadding>
+          <ListItem disablePadding className={classes.item}>
             <ListItemButton component={Link} to='/recipies'>
               <ListItemIcon>
-                <MenuBook />
+                <MenuBook className={classes.icon} />
               </ListItemIcon>
-              <ListItemText primary='Recipies' />
+              <ListItemText primary='Recipies' className={classes.text} />
             </ListItemButton>
           </ListItem>
-          <ListItem disablePadding>
+          <ListItem disablePadding className={classes.item}>
             <ListItemButton component={Link} to='/fridge'>
               <ListItemIcon>
-                <Kitchen />
+                <Kitchen className={classes.icon} />
               </ListItemIcon>
-              <ListItemText primary='Fridge' />
+              <ListItemText primary='Fridge' className={classes.text} />
             </ListItemButton>
           </ListItem>
         </List>
         <List>
-          <ListItem disablePadding>
+          <ListItem disablePadding className={classes.item}>
             <ListItemButton component={Link} to='/settings'>
               <ListItemIcon>
-                <Settings />
+                <Settings className={classes.icon} />
               </ListItemIcon>
-              <ListItemText primary='Settings' />
+              <ListItemText primary='Settings' className={classes.text} />
             </ListItemButton>
           </ListItem>
         </List>
