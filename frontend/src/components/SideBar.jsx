@@ -46,7 +46,6 @@ const SideBar = () => {
     <>
       <Box
         height='calc(100vh - 88px)'
-        flex={1}
         p={2}
         display='flex'
         flexDirection='column'
@@ -63,7 +62,7 @@ const SideBar = () => {
             </ListItemButton>
           </ListItem>
           <ListItem disablePadding className={classes.item}>
-            <ListItemButton component={Link} to='/products'>
+            <ListItemButton component={Link} to='/product'>
               <ListItemIcon>
                 <Fastfood className={classes.icon} />
               </ListItemIcon>

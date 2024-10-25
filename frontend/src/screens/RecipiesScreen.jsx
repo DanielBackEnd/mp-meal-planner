@@ -1,18 +1,18 @@
-import { Card, Paper, Stack } from '@mui/material';
 import TopBar from '../components/TopBar';
 import SideBar from '../components/SideBar';
+import { Stack, Paper } from '@mui/material';
 
-const HomeScreen = () => {
+const RecipiesScreen = () => {
   return (
     <>
       <TopBar />
       <Stack direction='row'>
         <SideBar />
         <Paper sx={{ width: '100%', padding: '40px', bgcolor: 'lightgray' }}>
-          Home
+          Recipies
         </Paper>
       </Stack>
     </>
   );
 };
-export default HomeScreen;
+export default RecipiesScreen;
