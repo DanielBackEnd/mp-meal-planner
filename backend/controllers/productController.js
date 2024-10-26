@@ -29,6 +29,7 @@ const getProductDetails = asyncHandler(async (req, res) => {
       name: product.name,
       weight: product.weight,
       mark: product.mark,
+      price: product.price,
     });
   } else {
     res.status(500);
@@ -46,6 +47,7 @@ const addNewProduct = asyncHandler(async (req, res) => {
     name,
     weight,
     mark,
+    price,
   });
 
   if (product) {
@@ -54,6 +56,7 @@ const addNewProduct = asyncHandler(async (req, res) => {
       name: product.name,
       weight: product.weight,
       mark: product.mark,
+      price: product.price,
     });
   } else {
     res.status(400);
@@ -71,6 +74,7 @@ const updateProduct = asyncHandler(async (req, res) => {
     product.name = req.body.name || product.name;
     product.weight = req.body.weight || product.weight;
     product.mark = req.body.mark || product.mark;
+    product.price = req.body.price || product.price;
 
     const updatedProduct = await product.save();
 
@@ -79,6 +83,7 @@ const updateProduct = asyncHandler(async (req, res) => {
       name: updatedProduct.name,
       weight: updatedProduct.weight,
       mark: updatedProduct.mark,
+      price: updateProduct.price,
     });
   } else {
     res.status(404);
