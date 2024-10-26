@@ -21,6 +21,7 @@ const useStyles = makeStyles(theme => ({
     [theme.breakpoints.down('sm')]: {
       backgroundColor: '#2E79D5',
       maxWidth: '50px',
+      height: 'calc(100vh - 88px)',
     },
   },
   item: {
@@ -45,7 +46,7 @@ const SideBar = () => {
   return (
     <>
       <Box
-        height='calc(100vh - 88px)'
+        height='calc(100vh - 96px)'
         p={2}
         display='flex'
         flexDirection='column'
