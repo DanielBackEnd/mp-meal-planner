@@ -3,6 +3,8 @@ import TopBar from '../components/TopBar';
 import SideBar from '../components/SideBar';
 import {
   Stack,
+  Box,
+  Button,
   Paper,
   Table,
   TableBody,
@@ -15,6 +17,7 @@ import {
 } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
+import AddIcon from '@mui/icons-material/Add';
 
 const ProductScreen = () => {
   const { data: products } = useGetAllProductsQuery();
@@ -25,12 +28,27 @@ const ProductScreen = () => {
       <Stack direction='row'>
         <SideBar />
         <Paper sx={{ width: '100%', padding: '40px', bgcolor: 'lightgray' }}>
-          <Typography
-            variant='body1'
-            sx={{ fontWeight: '900', fontSize: '25px' }}
+          <Box
+            sx={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+            }}
           >
-            Products
-          </Typography>
+            <Typography
+              variant='body1'
+              sx={{ fontWeight: '900', fontSize: '25px' }}
+            >
+              Products
+            </Typography>
+            <Button
+              variant='contained'
+              startIcon={<AddIcon />}
+              sx={{ bgcolor: 'success.main' }}
+            >
+              Add
+            </Button>
+          </Box>
           {products.length > 0 ? (
             <TableContainer component={Paper} sx={{ marginTop: '25px' }}>
               <Table>
