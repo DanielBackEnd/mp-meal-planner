@@ -1,4 +1,5 @@
 import { Modal, Box, Typography, TextField, Button } from '@mui/material';
+import { toast } from 'react-toastify';
 
 const AddProductModal = ({ open, handleClose }) => {
   return (

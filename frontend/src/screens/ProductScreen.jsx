@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useGetAllProductsQuery } from '../slices/productApiSlice';
 import TopBar from '../components/TopBar';
 import SideBar from '../components/SideBar';
@@ -18,8 +19,14 @@ import {
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import AddIcon from '@mui/icons-material/Add';
+import AddProductModal from '../components/AddProductModal';
+import { toast } from 'react-toastify';
 
 const ProductScreen = () => {
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+
   const { data: products } = useGetAllProductsQuery();
 
   return (
@@ -45,24 +52,25 @@ const ProductScreen = () => {
               variant='contained'
               startIcon={<AddIcon />}
               sx={{ bgcolor: 'success.main' }}
+              onClick={handleOpen}
             >
               Add
             </Button>
           </Box>
-          {products.length > 0 ? (
-            <TableContainer component={Paper} sx={{ marginTop: '25px' }}>
-              <Table>
-                <TableHead>
-                  <TableRow>
-                    <TableCell>Product</TableCell>
-                    <TableCell>Weight</TableCell>
-                    <TableCell>Mark</TableCell>
-                    <TableCell>Price</TableCell>
-                    <TableCell>Action</TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {products.map(product => (
+          <TableContainer component={Paper} sx={{ marginTop: '25px' }}>
+            <Table>
+              <TableHead>
+                <TableRow>
+                  <TableCell>Product</TableCell>
+                  <TableCell>Weight</TableCell>
+                  <TableCell>Mark</TableCell>
+                  <TableCell>Price</TableCell>
+                  <TableCell>Action</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {products ? (
+                  products.map(product => (
                     <TableRow
                       key={product.id}
                       sx={{ borderBottom: '1px solid rgba(224,224,224,1)' }}
@@ -80,15 +88,16 @@ const ProductScreen = () => {
                         </IconButton>
                       </TableCell>
                     </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </TableContainer>
-          ) : (
-            <Typography>No products in datebase</Typography>
-          )}
+                  ))
+                ) : (
+                  <TableRow></TableRow>
+                )}
+              </TableBody>
+            </Table>
+          </TableContainer>
         </Paper>
       </Stack>
+      <AddProductModal open={open} handleClose={handleClose} />
     </>
   );
 };

@@ -9,7 +9,15 @@ export const productApiSlice = apiSlice.injectEndpoints({
         method: 'GET',
       }),
     }),
+    addNewProduct: builder.mutation({
+      query: data => ({
+        url: `${PRODUCTS_URL}`,
+        method: 'POST',
+        body: data,
+      }),
+    }),
   }),
 });
 
-export const { useGetAllProductsQuery } = productApiSlice;
+export const { useGetAllProductsQuery, useAddNewProductMutation } =
+  productApiSlice;
