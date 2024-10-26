@@ -27,7 +27,7 @@ const ProductScreen = () => {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
-  const { data: products } = useGetAllProductsQuery();
+  const { data: products, refetch } = useGetAllProductsQuery();
 
   return (
     <>
@@ -78,7 +78,7 @@ const ProductScreen = () => {
                       <TableCell>{product.name}</TableCell>
                       <TableCell>{product.weight}</TableCell>
                       <TableCell>{product.mark}</TableCell>
-                      <TableCell>0.00</TableCell>
+                      <TableCell>{product.price}</TableCell>
                       <TableCell>
                         <IconButton aria-label='edit'>
                           <EditIcon />
@@ -97,7 +97,7 @@ const ProductScreen = () => {
           </TableContainer>
         </Paper>
       </Stack>
-      <AddProductModal open={open} handleClose={handleClose} />
+      <AddProductModal open={open} handleClose={handleClose} refetch={refetch} />
     </>
   );
 };

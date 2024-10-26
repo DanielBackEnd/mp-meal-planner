@@ -1,7 +1,28 @@
+import { useState } from 'react';
 import { Modal, Box, Typography, TextField, Button } from '@mui/material';
 import { toast } from 'react-toastify';
+import { useAddNewProductMutation } from '../slices/productApiSlice';
 
-const AddProductModal = ({ open, handleClose }) => {
+const AddProductModal = ({ open, handleClose, refetch }) => {
+  const [name, setName] = useState('');
+  const [weight, setWeight] = useState('');
+  const [mark, setMark] = useState('');
+  const [price, setPrice] = useState('');
+
+  const [addNewProduct] = useAddNewProductMutation();
+
+  const submitHandler = async e => {
+    e.preventDefault();
+    try {
+      const res = await addNewProduct({ name, weight, mark, price }).unwrap();
+      refetch();
+      toast.success('Product added!');
+      handleClose();
+    } catch (err) {
+      toast.error(err?.data?.message || err.error);
+    }
+  };
+
   return (
     <Modal
       open={open}
@@ -36,31 +57,35 @@ const AddProductModal = ({ open, handleClose }) => {
             label='Product Name'
             variant='outlined'
             sx={{ marginBottom: '15px' }}
+            onChange={e => setName(e.target.value)}
           />
           <TextField
             fullWidth
             label='Weight'
             variant='outlined'
             sx={{ marginBottom: '15px' }}
+            onChange={e => setWeight(e.target.value)}
           />
           <TextField
             fullWidth
             label='Mark'
             variant='outlined'
             sx={{ marginBottom: '15px' }}
+            onChange={e => setMark(e.target.value)}
           />
           <TextField
             fullWidth
             label='Price'
             variant='outlined'
             sx={{ marginBottom: '15px' }}
+            onChange={e => setPrice(e.target.value)}
           />
           <Button
             variant='contained'
             color='primary'
             type='submit'
             fullWidth
-            onClick={handleClose}
+            onClick={submitHandler}
           >
             Add
           </Button>

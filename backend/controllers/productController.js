@@ -41,7 +41,7 @@ const getProductDetails = asyncHandler(async (req, res) => {
 // POST /api/products
 // private
 const addNewProduct = asyncHandler(async (req, res) => {
-  const { name, weight, mark } = req.body;
+  const { name, weight, mark, price } = req.body;
 
   const product = await Product.create({
     name,
