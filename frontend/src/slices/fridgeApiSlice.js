@@ -23,7 +23,19 @@ export const fridgeApiSlice = apiSlice.injectEndpoints({
         body: data,
       }),
     }),
+    deleteProductFromFridge: builder.mutation({
+      query: data => ({
+        url: `${FRIDGE_URL}/delete`,
+        method: 'DELETE',
+        body: data,
+      }),
+    }),
   }),
 });
 
-export const { useCreateFridgeMutation } = fridgeApiSlice;
+export const {
+  useCreateFridgeMutation,
+  useGetUserFridgeQuery,
+  useAddProductToFridgeMutation,
+  useDeleteProductFromFridgeMutation,
+} = fridgeApiSlice;
