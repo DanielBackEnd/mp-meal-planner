@@ -1,15 +1,32 @@
 import { useState } from 'react';
 import { Modal, Box, Typography, TextField, Button } from '@mui/material';
 import { toast } from 'react-toastify';
+import { useUpdateProductMutation } from '../slices/productApiSlice';
 
-const editProductModal = ({ open, handleClose, refetch }) => {
+const EditProductModal = ({ open, handleClose, refetch, productId }) => {
   const [name, setName] = useState('');
   const [weight, setWeight] = useState('');
   const [mark, setMark] = useState('');
   const [price, setPrice] = useState('');
 
+  const [updateProduct] = useUpdateProductMutation();
+
   const submitHandler = async e => {
     e.preventDefault();
+    try {
+      const res = await updateProduct({
+        id: productId,
+        name,
+        weight,
+        mark,
+        price,
+      }).unwrap();
+      refetch();
+      toast.success('Product updated!');
+      handleClose();
+    } catch (err) {
+      toast.error(err?.data?.message || err.error);
+    }
   };
 
   return (
@@ -76,7 +93,7 @@ const editProductModal = ({ open, handleClose, refetch }) => {
             fullWidth
             onClick={submitHandler}
           >
-            Add
+            Update
           </Button>
         </form>
       </Box>
@@ -84,4 +101,4 @@ const editProductModal = ({ open, handleClose, refetch }) => {
   );
 };
 
-export default editProductModal;
+export default EditProductModal;

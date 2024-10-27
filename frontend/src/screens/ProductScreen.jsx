@@ -20,11 +20,18 @@ import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import AddIcon from '@mui/icons-material/Add';
 import AddProductModal from '../components/AddProductModal';
+import EditProductModal from '../components/EditProductModal';
 
 const ProductScreen = () => {
-  const [open, setOpen] = useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const [openAddModal, setOpenAddModal] = useState(false);
+  const handleOpenAddModal = () => setOpenAddModal(true);
+  const handleCloseAddModal = () => setOpenAddModal(false);
+
+  const [openEditModal, setOpenEditModal] = useState(false);
+  const handleOpenEditModal = () => setOpenEditModal(true);
+  const handleCloseEditModal = () => setOpenEditModal(false);
+
+  const [productId, setProductId] = useState('');
 
   const { data: products, refetch } = useGetAllProductsQuery();
 
@@ -51,7 +58,7 @@ const ProductScreen = () => {
               variant='contained'
               startIcon={<AddIcon />}
               sx={{ bgcolor: 'success.main' }}
-              onClick={handleOpen}
+              onClick={handleOpenAddModal}
             >
               Add
             </Button>
@@ -79,7 +86,13 @@ const ProductScreen = () => {
                       <TableCell>{product.mark}</TableCell>
                       <TableCell>{product.price}</TableCell>
                       <TableCell>
-                        <IconButton aria-label='edit'>
+                        <IconButton
+                          aria-label='edit'
+                          onClick={e => {
+                            handleOpenEditModal();
+                            setProductId(product._id);
+                          }}
+                        >
                           <EditIcon />
                         </IconButton>
                         <IconButton aria-label='delete'>
@@ -97,9 +110,15 @@ const ProductScreen = () => {
         </Paper>
       </Stack>
       <AddProductModal
-        open={open}
-        handleClose={handleClose}
+        open={openAddModal}
+        handleClose={handleCloseAddModal}
         refetch={refetch}
+      />
+      <EditProductModal
+        open={openEditModal}
+        handleClose={handleCloseEditModal}
+        refetch={refetch}
+        productId={productId}
       />
     </>
   );

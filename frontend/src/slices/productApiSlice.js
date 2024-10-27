@@ -17,14 +17,17 @@ export const productApiSlice = apiSlice.injectEndpoints({
       }),
     }),
     updateProduct: builder.mutation({
-      query: ({id, ...data}) => ({
+      query: ({ id, ...data }) => ({
         url: `${PRODUCTS_URL}/${id}`,
-        method: 'POST',
+        method: 'PUT',
         body: data,
-      })
-    })
+      }),
+    }),
   }),
 });
 
-export const { useGetAllProductsQuery, useAddNewProductMutation } =
-  productApiSlice;
+export const {
+  useGetAllProductsQuery,
+  useAddNewProductMutation,
+  useUpdateProductMutation,
+} = productApiSlice;
