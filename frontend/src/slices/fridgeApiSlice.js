@@ -10,6 +10,13 @@ export const fridgeApiSlice = apiSlice.injectEndpoints({
         body: data,
       }),
     }),
+    getUserFridge: builder.query({
+      query: () => ({
+        url: `${FRIDGE_URL}`,
+        method: 'GET',
+      }),
+    }),
+    
   }),
 });
 
