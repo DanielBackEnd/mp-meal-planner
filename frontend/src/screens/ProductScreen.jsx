@@ -20,7 +20,6 @@ import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import AddIcon from '@mui/icons-material/Add';
 import AddProductModal from '../components/AddProductModal';
-import { toast } from 'react-toastify';
 
 const ProductScreen = () => {
   const [open, setOpen] = useState(false);
@@ -72,7 +71,7 @@ const ProductScreen = () => {
                 {products ? (
                   products.map(product => (
                     <TableRow
-                      key={product.id}
+                      key={product._id}
                       sx={{ borderBottom: '1px solid rgba(224,224,224,1)' }}
                     >
                       <TableCell>{product.name}</TableCell>
@@ -97,7 +96,11 @@ const ProductScreen = () => {
           </TableContainer>
         </Paper>
       </Stack>
-      <AddProductModal open={open} handleClose={handleClose} refetch={refetch} />
+      <AddProductModal
+        open={open}
+        handleClose={handleClose}
+        refetch={refetch}
+      />
     </>
   );
 };
