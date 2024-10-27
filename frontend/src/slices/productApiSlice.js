@@ -36,5 +36,5 @@ export const {
   useGetAllProductsQuery,
   useAddNewProductMutation,
   useUpdateProductMutation,
-  udeDeleteProductMutation,
+  useDeleteProductMutation,
 } = productApiSlice;

@@ -1,5 +1,8 @@
 import { useState } from 'react';
-import { useGetAllProductsQuery } from '../slices/productApiSlice';
+import {
+  useGetAllProductsQuery,
+  useDeleteProductMutation,
+} from '../slices/productApiSlice';
 import TopBar from '../components/TopBar';
 import SideBar from '../components/SideBar';
 import {
@@ -21,6 +24,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import AddIcon from '@mui/icons-material/Add';
 import AddProductModal from '../components/AddProductModal';
 import EditProductModal from '../components/EditProductModal';
+import { toast } from 'react-toastify';
 
 const ProductScreen = () => {
   const [openAddModal, setOpenAddModal] = useState(false);
@@ -34,6 +38,18 @@ const ProductScreen = () => {
   const [productId, setProductId] = useState('');
 
   const { data: products, refetch } = useGetAllProductsQuery();
+
+  const [deleteProduct] = useDeleteProductMutation();
+
+  const handleDelete = async id => {
+    try {
+      await deleteProduct(id).unwrap();
+      toast.success('Product has been deleted!');
+      refetch();
+    } catch (err) {
+      toast.error(err?.data?.message || err.message);
+    }
+  };
 
   return (
     <>
@@ -95,7 +111,20 @@ const ProductScreen = () => {
                         >
                           <EditIcon />
                         </IconButton>
-                        <IconButton aria-label='delete'>
+                        <IconButton
+                          aria-label='delete'
+                          onClick={e => {
+                            const confirmDelete = window.confirm(
+                              'Are you sure to delete this product?'
+                            );
+
+                            if (!confirmDelete) {
+                              return;
+                            }
+                            setProductId(product._id);
+                            handleDelete(product._id);
+                          }}
+                        >
                           <DeleteIcon />
                         </IconButton>
                       </TableCell>
