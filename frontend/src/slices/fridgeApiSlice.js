@@ -16,7 +16,13 @@ export const fridgeApiSlice = apiSlice.injectEndpoints({
         method: 'GET',
       }),
     }),
-    
+    addProductToFridge: builder.mutation({
+      query: data => ({
+        url: `${FRIDGE_URL}/add`,
+        method: 'POST',
+        body: data,
+      }),
+    }),
   }),
 });
 
