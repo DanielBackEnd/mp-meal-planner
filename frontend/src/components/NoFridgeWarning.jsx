@@ -1,6 +1,6 @@
 import { Box, Typography, Button } from '@mui/material';
 
-const NoFridgeWarning = handleCreateFridge => {
+const NoFridgeWarning = ({ handleCreateFridge }) => {
   return (
     <>
       <Box
@@ -22,7 +22,9 @@ const NoFridgeWarning = handleCreateFridge => {
             fontWeight: 'bold',
             textTransform: 'none',
           }}
-          onClick={handleCreateFridge}
+          onClick={() => {
+            handleCreateFridge();
+          }}
         >
           Create New Fridge
         </Button>

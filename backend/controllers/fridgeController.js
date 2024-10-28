@@ -33,7 +33,7 @@ const createFridge = asyncHandler(async (req, res) => {
 // GET /api/fridge
 // private
 const getUserFridge = asyncHandler(async (req, res) => {
-  const fridge = await Fridge.findById({ user: req.user._id });
+  const fridge = await Fridge.findOne({ user: req.user._id });
 
   if (fridge) {
     res.status(201).json({

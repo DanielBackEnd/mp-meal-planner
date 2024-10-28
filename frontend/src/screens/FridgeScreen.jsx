@@ -6,15 +6,21 @@ import {
   useGetUserFridgeQuery,
   useCreateFridgeMutation,
 } from '../slices/fridgeApiSlice';
-import { useEffect } from 'react';
+import { toast } from 'react-toastify';
 
 const FridgeScreen = () => {
-  const { data: userFridge } = useGetUserFridgeQuery();
+  const { data: userFridge, refetch } = useGetUserFridgeQuery();
   const [createFridge] = useCreateFridgeMutation();
 
   const handleCreateFridge = async () => {
-    
-  }
+    try {
+      await createFridge({ products: [] }).unwrap();
+      toast.success('Fridge has been created');
+      refetch();
+    } catch (err) {
+      toast.error(err?.data?.message || err.message);
+    }
+  };
 
   return (
     <>
@@ -31,7 +37,11 @@ const FridgeScreen = () => {
             alignItems: 'center',
           }}
         >
-          {userFridge ? 'fridge' : <NoFridgeWarning />}
+          {userFridge ? (
+            'fridge'
+          ) : (
+            <NoFridgeWarning handleCreateFridge={handleCreateFridge} />
+          )}
         </Paper>
       </Stack>
     </>
