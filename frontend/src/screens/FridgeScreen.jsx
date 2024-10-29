@@ -1,25 +1,33 @@
 import { useState } from 'react';
 import TopBar from '../components/TopBar';
 import SideBar from '../components/SideBar';
-import { Stack, Paper, Typography, Box, TextField } from '@mui/material';
+import {
+  Stack,
+  Paper,
+  Typography,
+  List,
+  ListItem,
+  Button,
+  TextField,
+} from '@mui/material';
 import NoFridgeWarning from '../components/NoFridgeWarning';
 import {
   useGetUserFridgeQuery,
   useCreateFridgeMutation,
 } from '../slices/fridgeApiSlice';
+import { useSearchProductsByTermQuery } from '../slices/productApiSlice';
 import { toast } from 'react-toastify';
 
 const FridgeScreen = () => {
-  const [query, setQuery] = useState('');
-  const [suggestions, setSuggestions] = useState([]);
+  const [searchTerm, setSearchTerm] = useState('');
   const [quantity, setQuantity] = useState({});
 
   const { data: userFridge, refetch } = useGetUserFridgeQuery();
   const [createFridge] = useCreateFridgeMutation();
 
-  const searchProducts = async = searchTerm => {
-    const result = await 
-  }
+  const { data: suggestions = [] } = useSearchProductsByTermQuery(searchTerm, {
+    skip: searchTerm.length === 0,
+  });
 
   const handleCreateFridge = async () => {
     try {
@@ -29,6 +37,10 @@ const FridgeScreen = () => {
     } catch (err) {
       toast.error(err?.data?.message || err.message);
     }
+  };
+
+  const handleAddProduct = async product => {
+    console.log('add to the fridge');
   };
 
   return (
@@ -51,8 +63,8 @@ const FridgeScreen = () => {
               <Typography variant='h2'>User fridge</Typography>
               <TextField
                 label='Find a product'
-                value={query}
-                onChange={e => setQuery(e.target.value)}
+                value={searchTerm}
+                onChange={e => setSearchTerm(e.target.value)}
                 fullWidth
               ></TextField>
               <List>
@@ -60,7 +72,7 @@ const FridgeScreen = () => {
                   <ListItem key={product.id}>
                     {product.name}
                     <TextField
-                      label='Ilość'
+                      label='count'
                       type='number'
                       value={quantity[product.id] || ''}
                       onChange={e =>
@@ -75,7 +87,7 @@ const FridgeScreen = () => {
                       variant='contained'
                       onClick={() => handleAddProduct(product)}
                     >
-                      Dodaj
+                      Add to fridge
                     </Button>
                   </ListItem>
                 ))}

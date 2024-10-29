@@ -31,7 +31,7 @@ export const productApiSlice = apiSlice.injectEndpoints({
     }),
     searchProductsByTerm: builder.query({
       query: searchTerm => ({
-        url: `${PRODUCTS_URL}/search/`,
+        url: `${PRODUCTS_URL}/search`,
         method: 'GET',
         params: { query: searchTerm },
       }),
