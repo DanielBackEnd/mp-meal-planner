@@ -6,6 +6,7 @@ import {
   addNewProduct,
   updateProduct,
   deleteProduct,
+  searchProductsByTerm,
 } from '../controllers/productController.js';
 import protect from '../middleware/authMiddleware.js';
 
@@ -15,5 +16,6 @@ router
   .get(protect, getProductDetails)
   .put(protect, updateProduct)
   .delete(protect, deleteProduct);
+router.get('/search', protect, searchProductsByTerm);
 
 export default router;

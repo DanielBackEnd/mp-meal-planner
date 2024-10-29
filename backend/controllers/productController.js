@@ -106,10 +106,27 @@ const deleteProduct = asyncHandler(async (req, res) => {
   }
 });
 
+// search product by term
+// GET /api/products/search
+// private
+const searchProductsByTerm = asyncHandler(async (req, res) => {
+  const searchTerm = req.query.query;
+  if (!searchTerm) {
+    res.status(400);
+    throw new Error('No products');
+  }
+  const products = await Product.find({
+    name: { $regex: searchTerm, $options: 'i' },
+  });
+
+  res.json(products);
+});
+
 export {
   getAllProducts,
   getProductDetails,
   addNewProduct,
   updateProduct,
   deleteProduct,
+  searchProductsByTerm,
 };
