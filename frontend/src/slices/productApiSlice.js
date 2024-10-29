@@ -29,6 +29,13 @@ export const productApiSlice = apiSlice.injectEndpoints({
         method: 'DELETE',
       }),
     }),
+    searchProductsByTerm: builder.query({
+      query: searchTerm => ({
+        url: `${PRODUCTS_URL}/search/`,
+        method: 'GET',
+        params: { query: searchTerm },
+      }),
+    }),
   }),
 });
 
@@ -37,4 +44,5 @@ export const {
   useAddNewProductMutation,
   useUpdateProductMutation,
   useDeleteProductMutation,
+  useSearchProductsByTermQuery,
 } = productApiSlice;
